@@ -26,6 +26,8 @@ jobs:
         run: |
           pip install sigma-cli
           pip install pySigma-backend-microsoft365defender
+          sigma plugin install microsoft365defender 2>/dev/null || true
+          sigma plugin install sentinel 2>/dev/null || true
 
       - name: Lint Sigma rules (validate YAML and schema)
         run: |
@@ -34,17 +36,19 @@ jobs:
             sigma check "$rule" || exit 1
           done
 
+      - name: List available sigma backends
+        run: sigma plugin list --plugin-type backend
+
       - name: Convert Sigma rules to Sentinel KQL
         run: |
           mkdir -p converted/sentinel-kql
           find sigma-rules/ -name "*.yml" | while read rule; do
-            # Preserve directory structure under converted/sentinel-kql/
             relative_path="${rule#sigma-rules/}"
             output_dir="converted/sentinel-kql/$(dirname "$relative_path")"
             mkdir -p "$output_dir"
             output_file="$output_dir/$(basename "${rule%.yml}.kql")"
             echo "Converting: $rule → $output_file"
-            sigma convert -t microsoft365defender "$rule" > "$output_file" || exit 1
+            sigma convert -t microsoft_xdr "$rule" > "$output_file" || exit 1
           done
 
       - name: Commit converted KQL files
