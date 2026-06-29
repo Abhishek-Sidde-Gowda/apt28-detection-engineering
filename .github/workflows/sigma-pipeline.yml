@@ -22,12 +22,9 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install sigma-cli and Sentinel backend
+      - name: Install sigma-cli and KQL backend
         run: |
-          pip install sigma-cli
-          pip install pySigma-backend-microsoft365defender
-          sigma plugin install microsoft365defender 2>/dev/null || true
-          sigma plugin install sentinel 2>/dev/null || true
+          pip install sigma-cli pySigma-backend-kusto
 
       - name: Lint Sigma rules (validate YAML and schema)
         run: |
@@ -36,10 +33,7 @@ jobs:
             sigma check "$rule" || exit 1
           done
 
-      - name: List available sigma backends
-        run: sigma plugin list --plugin-type backend
-
-      - name: Convert Sigma rules to Sentinel KQL
+      - name: Convert Sigma rules to KQL (Sentinel)
         run: |
           mkdir -p converted/sentinel-kql
           find sigma-rules/ -name "*.yml" | while read rule; do
@@ -48,7 +42,7 @@ jobs:
             mkdir -p "$output_dir"
             output_file="$output_dir/$(basename "${rule%.yml}.kql")"
             echo "Converting: $rule → $output_file"
-            sigma convert -t microsoft_xdr "$rule" > "$output_file" || exit 1
+            sigma convert -t kusto "$rule" > "$output_file" || exit 1
           done
 
       - name: Commit converted KQL files
