@@ -27,8 +27,7 @@ detection:
       - '\chrome.exe'
       - '\firefox.exe'
       - '\msedge.exe'
-  timeframe: 1m
-  condition: selection and not filter_browsers | count() by Image > 50
+  condition: selection and not filter_browsers
 falsepositives:
   - High-volume DNS applications
   - CDN-heavy web apps making many subresource requests
