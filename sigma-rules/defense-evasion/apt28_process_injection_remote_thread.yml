@@ -1,0 +1,36 @@
+title: APT28 Remote Thread Creation for Process Injection
+id: d4e5f6a7-b8c9-0123-defa-456789012345
+status: experimental
+description: Detects CreateRemoteThread calls targeting common legitimate processes, a hallmark of APT28 process injection tradecraft.
+references:
+  - https://attack.mitre.org/techniques/T1055/001/
+  - https://attack.mitre.org/groups/G0007/
+author: Abhishek S
+date: 2026-06-29
+tags:
+  - attack.defense_evasion
+  - attack.privilege_escalation
+  - attack.t1055.001
+  - attack.g0007
+logsource:
+  category: create_remote_thread
+  product: windows
+detection:
+  selection:
+    TargetImage|endswith:
+      - '\svchost.exe'
+      - '\explorer.exe'
+      - '\lsass.exe'
+      - '\spoolsv.exe'
+  filter_legitimate:
+    SourceImage|endswith:
+      - '\MsMpEng.exe'
+  condition: selection and not filter_legitimate
+falsepositives:
+  - Some legitimate security tools inject threads for monitoring
+level: high
+fields:
+  - SourceImage
+  - TargetImage
+  - NewThreadId
+  - StartAddress

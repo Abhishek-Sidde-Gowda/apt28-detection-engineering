@@ -1,0 +1,36 @@
+title: APT28 WMI Remote Execution
+id: c9d0e1f2-a3b4-5678-cdef-901234567890
+status: experimental
+description: Detects WMI-based remote command execution, a fileless technique frequently used by APT28 for lateral movement and execution without dropping files to disk.
+references:
+  - https://attack.mitre.org/techniques/T1047/
+  - https://attack.mitre.org/groups/G0007/
+author: Abhishek S
+date: 2026-06-29
+tags:
+  - attack.execution
+  - attack.t1047
+  - attack.g0007
+logsource:
+  category: process_creation
+  product: windows
+detection:
+  selection:
+    ParentImage|endswith:
+      - '\WmiPrvSE.exe'
+    Image|endswith:
+      - '\cmd.exe'
+      - '\powershell.exe'
+      - '\pwsh.exe'
+      - '\cscript.exe'
+      - '\wscript.exe'
+  condition: selection
+falsepositives:
+  - Legitimate WMI-based management tools (SCCM, Ansible WinRM)
+  - Monitoring agents
+level: high
+fields:
+  - Image
+  - CommandLine
+  - ParentImage
+  - User

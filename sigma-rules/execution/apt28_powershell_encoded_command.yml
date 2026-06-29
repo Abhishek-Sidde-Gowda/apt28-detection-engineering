@@ -1,0 +1,35 @@
+title: APT28 PowerShell Encoded Command Execution
+id: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+status: experimental
+description: Detects PowerShell execution with encoded commands, a common APT28 technique for evading command-line logging and AV detection.
+references:
+  - https://attack.mitre.org/techniques/T1059/001/
+  - https://attack.mitre.org/groups/G0007/
+author: Abhishek S
+date: 2026-06-29
+tags:
+  - attack.execution
+  - attack.t1059.001
+  - attack.g0007
+logsource:
+  category: process_creation
+  product: windows
+detection:
+  selection:
+    Image|endswith:
+      - '\powershell.exe'
+      - '\pwsh.exe'
+    CommandLine|contains:
+      - '-EncodedCommand'
+      - '-enc '
+      - '-ec '
+  condition: selection
+falsepositives:
+  - Legitimate admin scripts using encoded commands
+  - Configuration management tools (SCCM, Ansible)
+level: medium
+fields:
+  - Image
+  - CommandLine
+  - ParentImage
+  - User

@@ -1,0 +1,42 @@
+title: APT28 DNS Tunneling Exfiltration
+id: b8c9d0e1-f2a3-4567-bcde-890123456789
+status: experimental
+description: Detects anomalous DNS query volume from a single process, indicative of APT28 DNS tunneling for data exfiltration or C2 communication.
+references:
+  - https://attack.mitre.org/techniques/T1041/
+  - https://attack.mitre.org/techniques/T1071/004/
+  - https://attack.mitre.org/groups/G0007/
+author: Abhishek S
+date: 2026-06-29
+tags:
+  - attack.exfiltration
+  - attack.t1041
+  - attack.command_and_control
+  - attack.t1071.004
+  - attack.g0007
+logsource:
+  category: dns_query
+  product: windows
+detection:
+  selection:
+    QueryName|contains:
+      - '.xyz'
+      - '.top'
+      - '.pw'
+      - '.cc'
+  filter_browsers:
+    Image|endswith:
+      - '\chrome.exe'
+      - '\firefox.exe'
+      - '\msedge.exe'
+  timeframe: 1m
+  condition: selection and not filter_browsers | count() by Image > 50
+falsepositives:
+  - High-volume DNS applications
+  - CDN-heavy web apps making many subresource requests
+level: medium
+fields:
+  - Image
+  - QueryName
+  - QueryType
+  - User

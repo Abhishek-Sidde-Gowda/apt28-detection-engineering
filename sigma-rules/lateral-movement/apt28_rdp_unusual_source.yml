@@ -1,0 +1,33 @@
+title: APT28 RDP Lateral Movement from Unusual Source
+id: e5f6a7b8-c9d0-1234-efab-567890123456
+status: experimental
+description: Detects RDP logon events originating from workstations rather than jump servers, consistent with APT28 lateral movement patterns.
+references:
+  - https://attack.mitre.org/techniques/T1021/001/
+  - https://attack.mitre.org/groups/G0007/
+author: Abhishek S
+date: 2026-06-29
+tags:
+  - attack.lateral_movement
+  - attack.t1021.001
+  - attack.g0007
+logsource:
+  product: windows
+  service: security
+detection:
+  selection:
+    EventID: 4624
+    LogonType: 10
+  filter_expected_sources:
+    IpAddress|startswith:
+      - '10.0.0.'    # adjust to your jump server subnet
+  condition: selection and not filter_expected_sources
+falsepositives:
+  - Legitimate remote administration from non-standard sources
+  - Help desk accessing systems
+level: medium
+fields:
+  - IpAddress
+  - TargetUserName
+  - WorkstationName
+  - LogonType

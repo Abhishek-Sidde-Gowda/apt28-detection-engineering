@@ -1,0 +1,42 @@
+title: APT28 System Information Discovery
+id: f6a7b8c9-d0e1-2345-fabc-678901234567
+status: experimental
+description: Detects rapid system enumeration commands commonly run by APT28 after initial access to profile the target environment.
+references:
+  - https://attack.mitre.org/techniques/T1082/
+  - https://attack.mitre.org/techniques/T1016/
+  - https://attack.mitre.org/groups/G0007/
+author: Abhishek S
+date: 2026-06-29
+tags:
+  - attack.discovery
+  - attack.t1082
+  - attack.t1016
+  - attack.g0007
+logsource:
+  category: process_creation
+  product: windows
+detection:
+  selection:
+    Image|endswith:
+      - '\systeminfo.exe'
+      - '\ipconfig.exe'
+      - '\net.exe'
+      - '\nltest.exe'
+      - '\whoami.exe'
+    ParentImage|endswith:
+      - '\cmd.exe'
+      - '\powershell.exe'
+      - '\pwsh.exe'
+  timeframe: 5m
+  condition: selection | count() by ParentProcessId > 3
+falsepositives:
+  - Legitimate admin scripts running multiple discovery commands
+  - IT inventory tools
+level: medium
+fields:
+  - Image
+  - CommandLine
+  - ParentImage
+  - ParentCommandLine
+  - User

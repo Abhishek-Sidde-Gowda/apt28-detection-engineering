@@ -1,0 +1,42 @@
+title: APT28 Spearphishing Attachment - Office Macro Execution
+id: a7b8c9d0-e1f2-3456-abcd-789012345678
+status: experimental
+description: Detects Office applications spawning suspicious child processes, consistent with APT28 spearphishing attachments executing macros to drop payloads.
+references:
+  - https://attack.mitre.org/techniques/T1566/001/
+  - https://attack.mitre.org/groups/G0007/
+author: Abhishek S
+date: 2026-06-29
+tags:
+  - attack.initial_access
+  - attack.t1566.001
+  - attack.g0007
+logsource:
+  category: process_creation
+  product: windows
+detection:
+  selection_parent:
+    ParentImage|endswith:
+      - '\WINWORD.EXE'
+      - '\EXCEL.EXE'
+      - '\POWERPNT.EXE'
+      - '\OUTLOOK.EXE'
+  selection_child:
+    Image|endswith:
+      - '\cmd.exe'
+      - '\powershell.exe'
+      - '\pwsh.exe'
+      - '\wscript.exe'
+      - '\cscript.exe'
+      - '\mshta.exe'
+      - '\certutil.exe'
+  condition: selection_parent and selection_child
+falsepositives:
+  - Legitimate macros in approved business templates
+level: high
+fields:
+  - ParentImage
+  - Image
+  - CommandLine
+  - ParentCommandLine
+  - User
