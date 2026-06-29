@@ -1,0 +1,1 @@
+ParentImage endswith "\\WmiPrvSE.exe" and (Image endswith "\\cmd.exe" or Image endswith "\\powershell.exe" or Image endswith "\\pwsh.exe" or Image endswith "\\cscript.exe" or Image endswith "\\wscript.exe")

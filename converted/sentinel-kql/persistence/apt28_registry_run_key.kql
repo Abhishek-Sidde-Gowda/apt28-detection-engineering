@@ -1,0 +1,1 @@
+(TargetObject contains "\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run" or TargetObject contains "\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\RunOnce" or TargetObject contains "\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Run") and (not((Image endswith "\\msiexec.exe" or Image endswith "\\setup.exe")))

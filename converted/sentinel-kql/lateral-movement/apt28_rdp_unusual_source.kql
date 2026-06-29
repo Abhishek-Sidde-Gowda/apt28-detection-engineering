@@ -1,0 +1,1 @@
+(EventID == 4624 and LogonType == 10) and (not(IpAddress startswith "10.0.0."))

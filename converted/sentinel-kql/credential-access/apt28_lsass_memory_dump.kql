@@ -1,0 +1,1 @@
+(TargetImage endswith "\\lsass.exe" and (GrantedAccess contains "0x1010" or GrantedAccess contains "0x1410" or GrantedAccess contains "0x147a" or GrantedAccess contains "0x143a")) and (not((SourceImage endswith "\\MsMpEng.exe" or SourceImage endswith "\\WerFault.exe" or SourceImage endswith "\\taskmgr.exe")))

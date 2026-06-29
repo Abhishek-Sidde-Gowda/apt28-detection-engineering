@@ -1,0 +1,1 @@
+(QueryName contains ".xyz" or QueryName contains ".top" or QueryName contains ".pw" or QueryName contains ".cc") and (not((Image endswith "\\chrome.exe" or Image endswith "\\firefox.exe" or Image endswith "\\msedge.exe")))

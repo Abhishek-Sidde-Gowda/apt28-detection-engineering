@@ -1,0 +1,1 @@
+(TargetImage endswith "\\svchost.exe" or TargetImage endswith "\\explorer.exe" or TargetImage endswith "\\lsass.exe" or TargetImage endswith "\\spoolsv.exe") and (not(SourceImage endswith "\\MsMpEng.exe"))

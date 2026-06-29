@@ -1,0 +1,1 @@
+(Image endswith "\\systeminfo.exe" or Image endswith "\\ipconfig.exe" or Image endswith "\\nltest.exe" or Image endswith "\\whoami.exe") and (ParentImage endswith "\\cmd.exe" or ParentImage endswith "\\powershell.exe" or ParentImage endswith "\\pwsh.exe")
