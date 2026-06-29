@@ -9,7 +9,6 @@ references:
 author: Abhishek S
 date: 2026-06-29
 tags:
-  - attack.discovery
   - attack.t1082
   - attack.t1016
   - attack.g0007
@@ -17,19 +16,18 @@ logsource:
   category: process_creation
   product: windows
 detection:
-  selection:
+  selection_image:
     Image|endswith:
       - '\systeminfo.exe'
       - '\ipconfig.exe'
-      - '\net.exe'
       - '\nltest.exe'
       - '\whoami.exe'
+  selection_parent:
     ParentImage|endswith:
       - '\cmd.exe'
       - '\powershell.exe'
       - '\pwsh.exe'
-  timeframe: 5m
-  condition: selection | count() by ParentProcessId > 3
+  condition: selection_image and selection_parent
 falsepositives:
   - Legitimate admin scripts running multiple discovery commands
   - IT inventory tools

@@ -8,7 +8,6 @@ references:
 author: Abhishek S
 date: 2026-06-29
 tags:
-  - attack.credential_access
   - attack.t1003.001
   - attack.g0007
 logsource:

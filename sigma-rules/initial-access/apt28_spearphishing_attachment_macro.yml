@@ -8,7 +8,6 @@ references:
 author: Abhishek S
 date: 2026-06-29
 tags:
-  - attack.initial_access
   - attack.t1566.001
   - attack.g0007
 logsource:

@@ -8,8 +8,6 @@ references:
 author: Abhishek S
 date: 2026-06-29
 tags:
-  - attack.defense_evasion
-  - attack.privilege_escalation
   - attack.t1055.001
   - attack.g0007
 logsource:

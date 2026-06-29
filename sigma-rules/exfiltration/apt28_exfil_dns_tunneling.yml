@@ -9,9 +9,7 @@ references:
 author: Abhishek S
 date: 2026-06-29
 tags:
-  - attack.exfiltration
   - attack.t1041
-  - attack.command_and_control
   - attack.t1071.004
   - attack.g0007
 logsource:

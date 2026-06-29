@@ -8,7 +8,6 @@ references:
 author: Abhishek S
 date: 2026-06-29
 tags:
-  - attack.lateral_movement
   - attack.t1021.001
   - attack.g0007
 logsource:

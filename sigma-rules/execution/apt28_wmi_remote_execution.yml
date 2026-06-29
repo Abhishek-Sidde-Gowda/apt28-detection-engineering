@@ -8,7 +8,6 @@ references:
 author: Abhishek S
 date: 2026-06-29
 tags:
-  - attack.execution
   - attack.t1047
   - attack.g0007
 logsource:
