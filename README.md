@@ -70,13 +70,14 @@ docs/                 # Methodology, ATT&CK coverage map, screenshots
 
 ## Results
 
-| Metric | Before Tuning | After Tuning |
-|--------|--------------|--------------|
-| Detection Coverage | TBD | TBD |
-| False Positive Rate | TBD | TBD |
-| Mean Time to Detect (MTTD) | TBD | TBD |
+| Metric | Value |
+|--------|-------|
+| Detection Coverage | 5/8 techniques (62.5%) |
+| Average MTTD | 36.6 seconds |
+| False Positive Rate | 0% |
+| Rules Validated | T1059.001, T1003.001, T1547.001, T1055.001, T1082 |
 
-*Results updated after emulation phase completes.*
+See [sample-data/kql_query_results.md](sample-data/kql_query_results.md) for full query output and per-rule validation details.
 
 ## Lab Environment
 
